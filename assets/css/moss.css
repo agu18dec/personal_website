@@ -1,0 +1,136 @@
+/* Agam Bhatia — personal site, in the manner of robert-moss.com:
+   Tufte/LaTeX chassis. ET Book on #fffff8, one centered column,
+   justified prose with LaTeX paragraph indents, hairline rules.
+   Light only — no theme machinery, no ambient canvas. */
+
+@font-face {
+  font-family: 'et-book';
+  src: url('../fonts/et-book/et-book-roman.woff') format('woff');
+  font-weight: normal; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'et-book';
+  src: url('../fonts/et-book/et-book-italic.woff') format('woff');
+  font-weight: normal; font-style: italic; font-display: swap;
+}
+@font-face {
+  font-family: 'et-book';
+  src: url('../fonts/et-book/et-book-bold.woff') format('woff');
+  font-weight: bold; font-style: normal; font-display: swap;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { font-size: 17px; }
+body {
+  font-family: et-book, Palatino, 'Palatino Linotype', 'Book Antiqua', Georgia, serif;
+  background-color: #fffff8;
+  color: #111;
+  line-height: 1.45;
+}
+::selection { background: #b4d5fe; }
+
+a { color: inherit; text-decoration: underline; text-decoration-color: #333; text-decoration-thickness: 1px; text-underline-offset: 2.5px; }
+a:hover { text-decoration-thickness: 1.5px; }
+a:focus-visible { outline: 1.5px solid #111; outline-offset: 2px; }
+
+/* ── Masthead: links row, centered name, rule, nav ─────────────────── */
+.top-links { text-align: center; margin: 25px 0 20px; font-size: 1.22rem; }
+.top-links .sep { margin: 0 .35rem; color: #111; }
+.top-links a { white-space: nowrap; transition: color .15s ease; }
+.top-links a svg { width: 17px; height: 17px; vertical-align: -2px; margin-right: .3rem; fill: currentColor; transition: fill .15s ease; }
+.top-links a:hover { color: var(--brand, #111); text-decoration-color: var(--brand, #333); }
+.b-github { --brand: #24292e; }
+.b-scholar { --brand: #4285f4; }
+.b-linkedin { --brand: #0a66c2; }
+.b-x { --brand: #000; }
+
+h1.site-title {
+  text-align: center; font-weight: 400; font-size: 3.2rem; line-height: 1;
+  margin: 20px auto;
+}
+hr.title-rule, hr.section-rule {
+  border: none; border-top: 1px solid #ccc;
+  width: min(920px, 93%); margin: 0 auto;
+}
+
+nav.site-nav { text-align: center; margin: 22px 0 34px; }
+nav.site-nav a { display: inline-block; margin: 0 .95rem; font-size: 1.28rem; }
+nav.site-nav a.active { font-weight: bold; }
+
+/* ── Content column ────────────────────────────────────────────────── */
+.content {
+  width: min(920px, 93%);
+  margin: 0 auto;
+  padding-bottom: .4rem;
+}
+
+/* LaTeX-style prose: justified, indent instead of paragraph gaps */
+.bio p {
+  font-size: 1.55rem; line-height: 1.5;
+  text-align: justify; hyphens: auto; -webkit-hyphens: auto;
+}
+.bio p + p, .bio ul + p { text-indent: 2em; }
+.bio p + p { clear: left; }
+.bio ul { margin: .3rem 0 .9rem 2em; font-size: 1.55rem; line-height: 1.5; clear: left; }
+.bio ul li { margin-bottom: .45rem; text-align: justify; hyphens: auto; -webkit-hyphens: auto; }
+.bio ul li::marker { content: '\2013\2002'; }
+
+.bio-photo { float: left; width: 172px; margin: .35rem 1.5rem .4rem 0; border-radius: 6px; }
+@media (max-width: 620px) { .bio-photo { float: none; display: block; width: 72%; margin: 0 auto 1rem; } }
+
+/* inline org marks and their hover identity cards */
+.org { position: relative; }
+.org-logo { width: 17px; height: 17px; border-radius: 3px; vertical-align: -2.5px; margin-right: .25rem; display: inline-block; }
+.org-logo-lg { width: 24px; height: 24px; vertical-align: -6px; }
+.org-card {
+  position: absolute; left: 50%; bottom: calc(100% + 8px);
+  transform: translateX(-50%) translateY(4px);
+  display: flex; align-items: center; gap: .55rem; padding: .5rem .8rem;
+  background: #fffff8; border: 1px solid #ccc; border-radius: 4px;
+  box-shadow: 0 2px 10px rgba(17, 17, 17, .08);
+  white-space: nowrap; text-indent: 0; text-align: left;
+  opacity: 0; pointer-events: none; z-index: 30;
+  transition: opacity .15s ease, transform .15s ease;
+}
+.org:hover .org-card, .org:focus-visible .org-card { opacity: 1; transform: translateX(-50%) translateY(0); }
+.org-card img { width: 21px; height: 21px; border-radius: 4px; display: block; }
+.org-card b { display: block; font-size: .95rem; line-height: 1.25; }
+.org-card i { display: block; font-size: .8rem; color: #666; }
+@media (hover: none) { .org-card { display: none; } }
+
+/* ── Section heads (research page) ─────────────────────────────────── */
+h2.section-head {
+  font-weight: 400; font-size: 2.05rem; line-height: 1;
+  margin: 3rem 0 .35rem;
+}
+h2.section-head + hr.section-rule { width: 100%; margin: 0 0 1.6rem; }
+
+h3.year-head { font-weight: bold; font-size: 1.4rem; margin: 1.5rem 0 .75rem; }
+ul.pubs + h3.year-head { margin-top: 2rem; }
+
+/* publication / post entries, LaTeX-list style */
+ul.pubs { list-style: none; }
+ul.pubs li { margin-bottom: 1.35rem; }
+.pub-title { font-size: 1.45rem; font-weight: bold; }
+.pub-authors { font-size: 1.22rem; margin-top: .1rem; }
+.pub-authors .me { font-weight: bold; }
+.pub-authors em { font-style: normal; color: #666; }
+.pub-venue { font-size: 1.16rem; font-style: italic; color: #444; margin-top: .05rem; }
+.star { margin-right: .3rem; }
+.pub-legend { font-size: 1.05rem; font-style: italic; color: #666; margin: 1.4rem 0 .4rem; }
+.pub-more { font-size: 1.06rem; }
+
+/* ── Footer ────────────────────────────────────────────────────────── */
+.page-foot {
+  width: min(920px, 93%); margin: .3rem auto 0; padding: .55rem 0 .9rem;
+  border-top: 1px solid #ccc;
+  text-align: center; font-size: .9rem; color: #666;
+}
+
+@media (max-width: 500px) {
+  h1.site-title { font-size: 2.3rem; }
+  nav.site-nav a { font-size: 1.05rem; margin: 0 .55rem; }
+  .top-links { font-size: .9rem; }
+  .bio p, .bio ul { font-size: 1.2rem; }
+}
